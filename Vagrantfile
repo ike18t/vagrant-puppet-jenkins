@@ -1,9 +1,9 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "raring64"
-  config.vm.box_url = "http://cloud-images.ubuntu.com/raring/current/raring-server-cloudimg-vagrant-amd64-disk1.box"
+  config.vm.box = "trusty64"
+  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
   config.vm.hostname = "ci"
 
-  config.vm.network :private_network, ip: "192.168.2.200"
+  config.vm.network :private_network, ip: "192.168.10.200"
   #config.vm.network :public_network
 
   config.ssh.forward_agent = true
@@ -17,8 +17,10 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "manifests"
+    puppet.manifest_file = "default.pp"
     puppet.module_path = "modules"
-    puppet.options = ['--verbose']
+    puppet.options = "--verbose"
+    puppet.nfs = true
   end
 end
 
